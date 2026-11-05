@@ -1,0 +1,175 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import Roulette from "./components/Roulette/Roulette";
+import AddParticipants from "./components/AddParticipants/AddParticipants";
+import Footer from "./components/Footer/Footer";
+import WinnerModal from "./components/WinnerModal/WinnerModal";
+import { useEffect, useRef, useState } from "react";
+
+const createAmountChipImage = (
+  text: string,
+  chipImg: HTMLImageElement | null,
+): string => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return "";
+
+  const height = 200;
+  const font = "bold 40px Helvetica, Arial, sans-serif";
+  const iconSize = 56;
+  const gap = 12;
+  const paddingX = 16;
+
+  ctx.font = font;
+  const textWidth = Math.ceil(ctx.measureText(text).width);
+  const totalWidth = textWidth + gap + iconSize + paddingX * 2;
+
+  canvas.width = totalWidth;
+  canvas.height = height;
+
+  ctx.font = font;
+  ctx.fillStyle = "#ffffff";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "left";
+  ctx.fillText(text, paddingX, height / 2);
+
+  if (chipImg && chipImg.complete && chipImg.naturalWidth > 0) {
+    ctx.drawImage(
+      chipImg,
+      paddingX + textWidth + gap,
+      (height - iconSize) / 2,
+      iconSize,
+      iconSize,
+    );
+  }
+
+  return canvas.toDataURL("image/png");
+};
+
+const DEFAULT_VALUES = [
+  "50",
+  "60",
+  "80",
+  "100",
+  "150",
+  "200",
+  "50",
+  "60",
+  "80",
+  "100",
+  "150",
+  "200",
+  "50",
+  "60",
+  "80",
+  "100",
+  "50",
+  "60",
+];
+
+const buildAmountsList = (
+  values: string[],
+  chipImg: HTMLImageElement | null,
+) =>
+  values.map((value, index) => ({
+    option: value,
+    image: {
+      uri: createAmountChipImage(value, chipImg),
+      landscape: true,
+      sizeMultiplier: 1,
+    },
+    style: {
+      backgroundColor: index % 2 === 0 ? "#df3428" : "#1A1616",
+      textColor: "white",
+    },
+  }));
+
+function App() {
+  const [amounts, setAmounts] = useState<any[]>(() =>
+    buildAmountsList(DEFAULT_VALUES, null),
+  );
+  const [winner, setWinner] = useState<string | null>(null);
+  const chipImageRef = useRef<HTMLImageElement | null>(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = `${import.meta.env.BASE_URL}FICHA.png`;
+    img.onload = () => {
+      chipImageRef.current = img;
+      setAmounts((prev) =>
+        prev.map((item) => ({
+          ...item,
+          image: {
+            uri: createAmountChipImage(item.option, img),
+            landscape: true,
+            sizeMultiplier: 1,
+          },
+        })),
+      );
+    };
+    chipImageRef.current = img;
+  }, []);
+
+  const addParticipant = (name: string) => {
+    const newAmount = {
+      option: name,
+      image: {
+        uri: createAmountChipImage(name, chipImageRef.current),
+        landscape: true,
+        sizeMultiplier: 1,
+      },
+      style: {
+        backgroundColor: amounts.length % 2 === 0 ? "#df3428" : "#1A1616",
+        textColor: "white",
+      },
+    };
+    setAmounts([...amounts, newAmount]);
+  };
+
+  const handleResetAll = () => {
+    setAmounts([]);
+    setWinner(null);
+  };
+
+  const handleWinner = (winnerAmount: string) => {
+    setWinner(winnerAmount);
+  };
+
+  return (
+    <div
+      style={{
+        backgroundColor: "#121010",
+        minHeight: "100dvh",
+        width: "100%",
+        overflowX: "hidden",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <main className="container-fluid px-3 px-md-5 py-3 flex-grow-1 d-flex flex-column">
+        <div className="row g-3 justify-content-center w-100 m-0 flex-grow-1">
+          <div className="col-12 col-xl-9 d-flex flex-column flex-grow-1 p-0">
+            <div className="d-flex flex-column gap-3 flex-grow-1">
+              <AddParticipants
+                onAdd={addParticipant}
+                currentData={amounts.length}
+                amounts={amounts.map((p) => p.option)}
+              />
+              <Roulette
+                data={amounts}
+                onWinner={handleWinner}
+                onReset={handleResetAll}
+              />
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <WinnerModal winner={winner} onClose={() => setWinner(null)} />
+
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
