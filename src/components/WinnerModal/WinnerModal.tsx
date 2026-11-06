@@ -28,17 +28,15 @@ const WinnerModal = ({ winner, onClose }: Props) => {
           }}
         >
           <div className="modal-body d-flex flex-column align-items-center gap-3">
-            <div
-              className="d-flex align-items-center justify-content-center rounded-circle mb-2"
+            <img
+              src={`${import.meta.env.BASE_URL}LOGO_ROYAL.png`}
+              alt="Royal Casino Jirahara"
               style={{
-                width: "80px",
-                height: "80px",
-                backgroundColor: "rgba(223, 52, 40, 0.15)",
-                color: "#df3428",
+                width: "150px",
+                height: "auto",
+                objectFit: "contain",
               }}
-            >
-              <i className="bi bi-trophy-fill fs-1"></i>
-            </div>
+            />
 
             <h4
               className="fw-bold mb-0 text-uppercase"

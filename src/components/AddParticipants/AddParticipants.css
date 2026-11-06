@@ -10,6 +10,6 @@
 }
 
 .roulette-wheel-wrapper > div {
-  max-width: min(78vw, 48vh, 430px) !important;
-  max-height: min(78vw, 48vh, 430px) !important;
+  max-width: min(80vw, 50vh, 430px) !important;
+  max-height: min(80vw, 50vh, 430px) !important;
 }

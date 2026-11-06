@@ -89,6 +89,7 @@ function App() {
     buildAmountsList(DEFAULT_VALUES, null),
   );
   const [winner, setWinner] = useState<string | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const chipImageRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
@@ -146,24 +147,83 @@ function App() {
         flexDirection: "column",
       }}
     >
-      <main className="container-fluid px-3 px-md-5 py-3 flex-grow-1 d-flex flex-column">
+      <main className="container-fluid px-3 px-md-5 py-3 flex-grow-1 d-flex flex-column position-relative">
+        <div className="d-flex justify-content-end mb-2">
+          <button
+            type="button"
+            className="btn btn-danger rounded-circle d-flex align-items-center justify-content-center shadow"
+            style={{ width: "48px", height: "48px" }}
+            onClick={() => setIsSettingsOpen(true)}
+            title="Configuración"
+          >
+            <i className="fi fi-rr-settings fs-4 d-flex"></i>
+          </button>
+        </div>
+
         <div className="row g-3 justify-content-center w-100 m-0 flex-grow-1">
           <div className="col-12 col-xl-9 d-flex flex-column flex-grow-1 p-0">
             <div className="d-flex flex-column gap-3 flex-grow-1">
-              <AddParticipants
-                onAdd={addParticipant}
-                currentData={amounts.length}
-                amounts={amounts.map((p) => p.option)}
-              />
-              <Roulette
-                data={amounts}
-                onWinner={handleWinner}
-                onReset={handleResetAll}
-              />
+              <Roulette data={amounts} onWinner={handleWinner} />
             </div>
           </div>
         </div>
       </main>
+
+      {isSettingsOpen && (
+        <div
+          className="modal fade show d-block"
+          tabIndex={-1}
+          role="dialog"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
+        >
+          <div
+            className="modal-dialog modal-dialog-centered modal-lg"
+            role="document"
+          >
+            <div
+              className="modal-content rounded-4 text-white p-3 p-md-4"
+              style={{
+                backgroundColor: "#1A1616",
+                border: "1px solid #2C2424",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="fw-bold m-0 d-flex align-items-center gap-2">
+                  <i className="fi fi-rr-settings d-flex text-danger"></i>
+                  Configuración de Montos
+                </h5>
+              </div>
+
+              <div className="modal-body p-0">
+                <AddParticipants
+                  onAdd={addParticipant}
+                  currentData={amounts.length}
+                  amounts={amounts.map((p) => p.option)}
+                />
+              </div>
+
+              <div className="d-flex justify-content-between align-items-center gap-2 mt-4">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger rounded-pill px-4 fw-bold"
+                  onClick={handleResetAll}
+                >
+                  REINICIAR!
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-light rounded-pill px-4 fw-bold"
+                  onClick={() => setIsSettingsOpen(false)}
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <WinnerModal winner={winner} onClose={() => setWinner(null)} />
 
