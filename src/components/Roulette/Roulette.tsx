@@ -20,17 +20,24 @@ const Roulette = ({ data, onWinner }: Props) => {
 
   return (
     <div
-      className="p-3 p-md-4 rounded-4 w-100 flex-grow-1 d-flex flex-column justify-content-center"
-      style={{ backgroundColor: "#1A1616", border: "1px solid #2C2424" }}
+      className="p-3 p-md-4 rounded-4 w-100 d-flex flex-column justify-content-center align-items-center mx-auto shadow-lg"
+      style={{
+        backgroundColor: "#1A1616",
+        border: "1px solid #2C2424",
+        maxWidth: "680px",
+      }}
     >
-      <div className="d-flex flex-column align-items-center justify-content-center gap-2 gap-md-3 w-100">
+      <div className="d-flex flex-column align-items-center justify-content-center gap-2 w-100">
         <img
           src={`${import.meta.env.BASE_URL}LOGO_ROYAL.png`}
           alt="Royal Casino Jirahara"
           style={{
-            width: "clamp(130px, 18vh, 190px)",
-            height: "auto",
+            height: "clamp(150px, 23dvh, 200px)",
+            width: "auto",
+            maxWidth: "90%",
             objectFit: "contain",
+            marginTop: "-32px",
+            marginBottom: "-36px",
           }}
         />
 
@@ -50,9 +57,9 @@ const Roulette = ({ data, onWinner }: Props) => {
           <div className="text-secondary py-5 fs-5">Esperando montos...</div>
         )}
 
-        <div className="d-flex justify-content-center align-items-center w-100">
+        <div className="d-flex justify-content-center align-items-center w-100 mt-1">
           <button
-            className="btn btn-danger btn-lg rounded-pill px-5 fw-bold"
+            className="btn btn-danger btn-lg rounded-pill px-5 fw-bold shadow"
             onClick={handleSpinClick}
             disabled={mustSpin || data.length === 0}
           >

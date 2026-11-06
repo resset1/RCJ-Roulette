@@ -145,28 +145,21 @@ function App() {
         overflowX: "hidden",
         display: "flex",
         flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <main className="container-fluid px-3 px-md-5 py-3 flex-grow-1 d-flex flex-column position-relative">
-        <div className="d-flex justify-content-end mb-2">
-          <button
-            type="button"
-            className="btn btn-danger rounded-circle d-flex align-items-center justify-content-center shadow"
-            style={{ width: "48px", height: "48px" }}
-            onClick={() => setIsSettingsOpen(true)}
-            title="Configuración"
-          >
-            <i className="fi fi-rr-settings fs-4 d-flex"></i>
-          </button>
-        </div>
+      <button
+        type="button"
+        className="btn btn-danger rounded-circle d-flex align-items-center justify-content-center shadow position-fixed top-0 end-0 m-2 m-md-3"
+        style={{ width: "44px", height: "44px", zIndex: 1040 }}
+        onClick={() => setIsSettingsOpen(true)}
+        title="Configuración"
+      >
+        <i className="fi fi-rr-settings fs-5 d-flex"></i>
+      </button>
 
-        <div className="row g-3 justify-content-center w-100 m-0 flex-grow-1">
-          <div className="col-12 col-xl-9 d-flex flex-column flex-grow-1 p-0">
-            <div className="d-flex flex-column gap-3 flex-grow-1">
-              <Roulette data={amounts} onWinner={handleWinner} />
-            </div>
-          </div>
-        </div>
+      <main className="container px-3 py-2 flex-grow-1 d-flex align-items-center justify-content-center">
+        <Roulette data={amounts} onWinner={handleWinner} />
       </main>
 
       {isSettingsOpen && (

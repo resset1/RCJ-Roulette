@@ -15,26 +15,28 @@ const WinnerModal = ({ winner, onClose }: Props) => {
       onClick={onClose}
     >
       <div
-        className="modal-dialog modal-dialog-centered"
+        className="modal-dialog modal-dialog-centered px-2"
         role="document"
         onClick={(e) => e.stopPropagation()}
       >
         <div
-          className="modal-content rounded-4 text-white text-center p-4"
+          className="modal-content rounded-4 text-white text-center p-3 p-sm-4"
           style={{
             backgroundColor: "#1A1616",
             border: "1px solid #2C2424",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
           }}
         >
-          <div className="modal-body d-flex flex-column align-items-center gap-3">
+          <div className="modal-body d-flex flex-column align-items-center gap-2">
             <img
               src={`${import.meta.env.BASE_URL}LOGO_ROYAL.png`}
               alt="Royal Casino Jirahara"
               style={{
-                width: "150px",
+                width: "clamp(160px, 24dvh, 210px)",
                 height: "auto",
                 objectFit: "contain",
+                marginTop: "-20px",
+                marginBottom: "-20px",
               }}
             />
 
