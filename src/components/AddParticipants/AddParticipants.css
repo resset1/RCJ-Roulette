@@ -1,0 +1,26 @@
+.custom-input::placeholder {
+  color: #9ca3af !important;
+  opacity: 1;
+}
+.custom-input:focus {
+  background-color: #362d2d !important;
+  border-color: #dc3545 !important;
+  box-shadow: none;
+  color: white;
+}
+
+.roulette-wheel-wrapper > div {
+  width: min(82vw, 52dvh, 430px) !important;
+  height: min(82vw, 52dvh, 430px) !important;
+  max-width: min(82vw, 52dvh, 430px) !important;
+  max-height: min(82vw, 52dvh, 430px) !important;
+}
+
+@media (max-width: 576px) {
+  .roulette-wheel-wrapper > div {
+    width: min(85vw, 48dvh, 340px) !important;
+    height: min(85vw, 48dvh, 340px) !important;
+    max-width: min(85vw, 48dvh, 340px) !important;
+    max-height: min(85vw, 48dvh, 340px) !important;
+  }
+}
